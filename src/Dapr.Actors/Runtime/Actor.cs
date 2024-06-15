@@ -233,7 +233,7 @@ namespace Dapr.Actors.Runtime
         /// The class deriving from <see cref="Dapr.Actors.Runtime.Actor" /> must implement <see cref="Dapr.Actors.Runtime.IRemindable" /> to consume reminder invocations. Multiple reminders can be registered at any time, uniquely identified by <paramref name="reminderName" />. Existing reminders can also be updated by calling this method again. Reminder invocations are synchronized both with other reminders and other actor method callbacks.
         /// </para>
         /// </remarks>
-        protected async Task<IActorReminder> RegisterReminderAsync(
+        public async Task<IActorReminder> RegisterReminderAsync(
             string reminderName,
             byte[] state,
             TimeSpan dueTime,
@@ -270,7 +270,7 @@ namespace Dapr.Actors.Runtime
         /// The class deriving from <see cref="Dapr.Actors.Runtime.Actor" /> must implement <see cref="Dapr.Actors.Runtime.IRemindable" /> to consume reminder invocations. Multiple reminders can be registered at any time, uniquely identified by <paramref name="reminderName" />. Existing reminders can also be updated by calling this method again. Reminder invocations are synchronized both with other reminders and other actor method callbacks.
         /// </para>
         /// </remarks>
-        protected async Task<IActorReminder> RegisterReminderAsync(
+        public async Task<IActorReminder> RegisterReminderAsync(
             string reminderName,
             byte[] state,
             TimeSpan dueTime,
@@ -288,7 +288,7 @@ namespace Dapr.Actors.Runtime
                 Ttl = ttl
             });
         }
-        
+
         /// <summary>
         /// Registers a reminder with the actor.
         /// </summary>
@@ -308,7 +308,7 @@ namespace Dapr.Actors.Runtime
         /// The class deriving from <see cref="Dapr.Actors.Runtime.Actor" /> must implement <see cref="Dapr.Actors.Runtime.IRemindable" /> to consume reminder invocations. Multiple reminders can be registered at any time, uniquely identified by <paramref name="reminderName" />. Existing reminders can also be updated by calling this method again. Reminder invocations are synchronized both with other reminders and other actor method callbacks.
         /// </para>
         /// </remarks>
-        protected async Task<IActorReminder> RegisterReminderAsync(
+        public async Task<IActorReminder> RegisterReminderAsync(
             string reminderName,
             byte[] state,
             TimeSpan dueTime,
@@ -328,7 +328,7 @@ namespace Dapr.Actors.Runtime
                 Ttl = ttl
             });
         }
-        
+
         /// <summary>
         /// Registers a reminder with the actor.
         /// </summary>
@@ -347,7 +347,7 @@ namespace Dapr.Actors.Runtime
         /// The class deriving from <see cref="Dapr.Actors.Runtime.Actor" /> must implement <see cref="Dapr.Actors.Runtime.IRemindable" /> to consume reminder invocations. Multiple reminders can be registered at any time, uniquely identified by <paramref name="reminderName" />. Existing reminders can also be updated by calling this method again. Reminder invocations are synchronized both with other reminders and other actor method callbacks.
         /// </para>
         /// </remarks>
-        protected async Task<IActorReminder> RegisterReminderAsync(
+        public async Task<IActorReminder> RegisterReminderAsync(
             string reminderName,
             byte[] state,
             TimeSpan dueTime,
@@ -392,7 +392,7 @@ namespace Dapr.Actors.Runtime
         /// <returns>
         /// Returns a task that represents the asynchronous get operation. The result of the task contains the reminder if it exists, otherwise null.
         /// </returns>
-        protected async Task<IActorReminder> GetReminderAsync(string reminderName)
+        public async Task<IActorReminder> GetReminderAsync(string reminderName)
         {
             return await this.Host.TimerManager.GetReminderAsync(new ActorReminderToken(this.actorTypeName, this.Id, reminderName));
         }
@@ -404,7 +404,7 @@ namespace Dapr.Actors.Runtime
         /// <returns>
         /// Returns a task that represents the asynchronous unregistration operation.
         /// </returns>
-        protected Task UnregisterReminderAsync(IActorReminder reminder)
+        public Task UnregisterReminderAsync(IActorReminder reminder)
         {
             var token = reminder is ActorReminderToken ? (ActorReminderToken)reminder : new ActorReminderToken(this.actorTypeName, this.Id, reminder.Name);
             return this.Host.TimerManager.UnregisterReminderAsync(token);
@@ -417,7 +417,7 @@ namespace Dapr.Actors.Runtime
         /// <returns>
         /// Returns a task that represents the asynchronous unregistration operation.
         /// </returns>
-        protected Task UnregisterReminderAsync(string reminderName)
+        public Task UnregisterReminderAsync(string reminderName)
         {
             var token = new ActorReminderToken(this.actorTypeName, this.Id, reminderName);
             return this.Host.TimerManager.UnregisterReminderAsync(token);
@@ -522,7 +522,7 @@ namespace Dapr.Actors.Runtime
         /// </summary>
         /// <param name="timer">An IActorTimer representing timer that needs to be unregistered.</param>
         /// <returns>Task representing the Unregister timer operation.</returns>
-        protected async Task UnregisterTimerAsync(ActorTimer timer)
+        public async Task UnregisterTimerAsync(ActorTimer timer)
         {
             await this.Host.TimerManager.UnregisterTimerAsync(timer);
         }
@@ -532,7 +532,7 @@ namespace Dapr.Actors.Runtime
         /// </summary>
         /// <param name="timerName">Name of timer to unregister.</param>
         /// <returns>Task representing the Unregister timer operation.</returns>
-        protected async Task UnregisterTimerAsync(string timerName)
+        public async Task UnregisterTimerAsync(string timerName)
         {
             var token = new ActorTimerToken(this.actorTypeName, this.Id, timerName);
             await this.Host.TimerManager.UnregisterTimerAsync(token);
